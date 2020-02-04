@@ -118,9 +118,9 @@ export class TicTacToeComponent implements OnInit {
     if (!this.selected) {
       await this.checkOpponentWin();
       if (!this.selected) {
-        await this.checkCornerAvailable();
+        await this.checkCenter();
         if (!this.selected) {
-          await this.checkCenter();
+          await this.checkCornerAvailable();
           if (!this.selected) {
             await this.checkMiddleOfCorner();
           }
