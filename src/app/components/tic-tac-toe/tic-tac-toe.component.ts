@@ -120,9 +120,10 @@ export class TicTacToeComponent implements OnInit {
       if (!this.selected) {
         await this.checkCenter();
         if (!this.selected) {
-          await this.checkCornerAvailable();
+          await this.checkMiddleOfCorner();
           if (!this.selected) {
-            await this.checkMiddleOfCorner();
+            await this.checkCornerAvailable();
+
           }
         }
       }
@@ -190,7 +191,6 @@ export class TicTacToeComponent implements OnInit {
       this.message = 'computer win the toss';
     } else {
       this.message = 'you win the toss';
-
     }
   }
 }
