@@ -1,51 +1,23 @@
-.maindisplay {
-    background: lightgrey;
-    height: calc(100% / 3);
-    padding: 5% !important;
-    font-size: 4rem;
-    text-align: right;
-    font-family: Courier, monospace;
-    overflow: auto;
-}
-.subdisplay {
-    border-bottom: 1px solid black;
-    height: 25%;
-    font-size: 2rem;
-    overflow: auto;
-}
-.keypad {
-    height: calc(200% / 3);
-}
-.keys {
+ul {
+    list-style-type: none;
     margin: 0;
-    width: 25%;
-    height: 20%;
-    background: whitesmoke;
-    color: black;
-    padding: 2%;
-    font-size: 2rem;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li a {
+    display: block;
+    color: white;
     text-align: center;
-    cursor: pointer;
-}
-.one-line {
-    display: inline-block;
-}
-.pwa{
-    width: fit-content;
-    padding: 20px;
-    border: 1px solid black;
-    background-color: white;
-    border-radius: 5px;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-}
-.butt{
-    outline: none;
-    border: none;
-    background-color: transparent;
-    font-size: 15px;
-    padding: 5px;
-    color: #2196F3;
-    font-weight: 600;
-}
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  li a:hover {
+    background-color: #111;
+  }

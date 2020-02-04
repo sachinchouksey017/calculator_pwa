@@ -1,0 +1,23 @@
+<div *ngIf="!start" fxLayout='column' fxLayoutAlign='center center'>
+  <h1 style="width: fit-content;">welcome in Tic-Tac-Toe</h1> 
+  <button *ngIf='!show'  class="replayButton" (click)="toss()">Toss</button>
+  <h1 *ngIf='show' style="width: fit-content;">{{message}}</h1> 
+  <button *ngIf='show'  class="replayButton" (click)="start=true">play</button>
+</div>
+<div *ngIf="start" fxLayout='column'>
+  <div fxFlex fxLayout='row' fxLayoutAlign='center center'>
+    <div class="outer" fxFlex.lg=50>
+      <h1 class="head">Tic-Tac-Toe</h1>
+      <div fxLayout='row wrap'>
+        <div class="box" *ngFor='let i of originalArray;let ind=index' (click)="choose(ind)" fxFlex=33.333 fxLayout='row'
+          fxLayoutAlign='center center'>
+          {{i}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div fxFlex fxLayout='row' fxLayoutAlign='center center'>
+    <h1 style="width: fit-content;">{{message}}</h1> <button *ngIf="!play" class="replayButton" (click)="replay()">Replay</button>
+  </div>
+
+</div>
