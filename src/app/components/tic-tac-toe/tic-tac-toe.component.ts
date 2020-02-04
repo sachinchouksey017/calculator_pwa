@@ -89,6 +89,12 @@ export class TicTacToeComponent implements OnInit {
       }
     }
   }
+  checkOppositeCorner() {
+    this.selected = false;
+    if ((this.array[0] === this.playerLetter && this.array[8] === this.playerLetter) || (this.array[2] === this.playerLetter && this.array[6] === this.playerLetter)) {
+      this.checkMiddleOfCorner();
+    }
+  }
 
 
 
@@ -109,7 +115,7 @@ export class TicTacToeComponent implements OnInit {
     console.log(this.play, '    ', this.count);
 
     if (this.play && (this.count === 9 || this.count === 10)) {
-      this.message = 'Game over';
+      this.message = 'Game Tie';
       this.play = false;
     }
   }
@@ -120,77 +126,79 @@ export class TicTacToeComponent implements OnInit {
       if (!this.selected) {
         await this.checkCenter();
         if (!this.selected) {
-          await this.checkMiddleOfCorner();
+          await this.checkOppositeCorner();
           if (!this.selected) {
             await this.checkCornerAvailable();
+            if (!this.selected) {
+              await this.checkMiddleOfCorner();
+            }
+          }
+        }
+      }
+      }
+      this.count++;
+      console.log(this.play, ' in c   ', this.count);
+      if (this.checkWin(this.computerLetter)) {
+        this.message = 'ohh you loss';
+        this.play = false;
+      }
+    }
+    computerChance() {
+      let selected = false;
+      while (!selected && this.count < 9) {
+        const random = (Math.floor(Math.random() * 100)) % 9;
+        if (this.checkAvailable(random)) {
+          this.count++;
+          selected = true;
+          this.array[random] = '0';
+          if (this.checkWin('0')) {
+            console.log('computer win');
+            this.message = 'ohh you loss';
+            this.play = false;
 
           }
         }
       }
     }
-    this.count++;
-    console.log(this.play, ' in c   ', this.count);
-    if (this.checkWin(this.computerLetter)) {
-      this.message = 'ohh you loss';
-      this.play = false;
+    checkWin(symbol) {
+      if ((this.array[0] === symbol && this.array[1] === symbol && this.array[2] === symbol) ||
+        (this.array[3] === symbol && this.array[4] === symbol && this.array[5] === symbol) ||
+        (this.array[6] === symbol && this.array[7] === symbol && this.array[8] === symbol)) {
+        return true;
+      } else if ((this.array[0] === symbol && this.array[3] === symbol && this.array[6] === symbol) ||
+        (this.array[1] === symbol && this.array[4] === symbol && this.array[7] === symbol) ||
+        (this.array[2] === symbol && this.array[5] === symbol && this.array[8] === symbol)) {
+        return true;
+      } else if ((this.array[0] === symbol && this.array[4] === symbol && this.array[8] === symbol) ||
+        (this.array[2] === symbol && this.array[4] === symbol && this.array[6] === symbol)) {
+        return true;
+      } else {
+        return false;
+      }
     }
-  }
-  computerChance() {
-    let selected = false;
-    while (!selected && this.count < 9) {
-      const random = (Math.floor(Math.random() * 100)) % 9;
-      if (this.checkAvailable(random)) {
-        this.count++;
-        selected = true;
-        this.array[random] = '0';
-        if (this.checkWin('0')) {
-          console.log('computer win');
-          this.message = 'ohh you loss';
-          this.play = false;
-
-        }
+    checkAvailable(index) {
+      if (this.array[index] === 'X' || this.array[index] === '0') {
+        return false;
+      } else {
+        return true;
+      }
+    }
+    replay() {
+      this.array = ['', '', '', '', '', '', '', '', ''];
+      this.originalArray = ['', '', '', '', '', '', '', '', ''];
+      this.count = 0;
+      this.play = true;
+      this.message = '';
+      this.toss();
+    }
+    toss() {
+      const randomNumber = Math.floor(Math.random() * 10) % 2;
+      this.show = true;
+      if (randomNumber === 0) {
+        this.computerTurn();
+        this.message = 'computer win the toss';
+      } else {
+        this.message = 'you win the toss';
       }
     }
   }
-  checkWin(symbol) {
-    if ((this.array[0] === symbol && this.array[1] === symbol && this.array[2] === symbol) ||
-      (this.array[3] === symbol && this.array[4] === symbol && this.array[5] === symbol) ||
-      (this.array[6] === symbol && this.array[7] === symbol && this.array[8] === symbol)) {
-      return true;
-    } else if ((this.array[0] === symbol && this.array[3] === symbol && this.array[6] === symbol) ||
-      (this.array[1] === symbol && this.array[4] === symbol && this.array[7] === symbol) ||
-      (this.array[2] === symbol && this.array[5] === symbol && this.array[8] === symbol)) {
-      return true;
-    } else if ((this.array[0] === symbol && this.array[4] === symbol && this.array[8] === symbol) ||
-      (this.array[2] === symbol && this.array[4] === symbol && this.array[6] === symbol)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-  checkAvailable(index) {
-    if (this.array[index] === 'X' || this.array[index] === '0') {
-      return false;
-    } else {
-      return true;
-    }
-  }
-  replay() {
-    this.array = ['', '', '', '', '', '', '', '', ''];
-    this.originalArray = ['', '', '', '', '', '', '', '', ''];
-    this.count = 0;
-    this.play = true;
-    this.message = '';
-    this.toss();
-  }
-  toss() {
-    const randomNumber = Math.floor(Math.random() * 10) % 2;
-    this.show = true;
-    if (randomNumber === 0) {
-      this.computerTurn();
-      this.message = 'computer win the toss';
-    } else {
-      this.message = 'you win the toss';
-    }
-  }
-}
